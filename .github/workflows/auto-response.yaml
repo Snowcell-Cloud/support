@@ -1,0 +1,21 @@
+name: "Auto Response to Issues"
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment on Issue
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.issues.createComment({
+              issue_number: context.payload.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "👋 Thanks for opening an issue! Please check our [documentation](https://docs.snowcell.io) or [GitHub Discussions](https://github.com/snowcell-cloud/support/discussions) for more details."
+            });
